@@ -504,13 +504,15 @@ def update_metrics(prompt_text, response_length, model_name, comparison_models):
     return tokens_counter, words_counter, energy_counter, water_counter, co2_counter, chart_figure, tips_text
 
 if __name__ == '__main__':
-    print("Starting Dash server with debug mode enabled...")
-    print("Server will be available at: http://localhost:8050")
-    print("Hot-reloading should be active - try making changes to the code!")
-    print("If changes don't appear, try refreshing your browser!")
+    import os
+    port = int(os.environ.get('PORT', 8050))
+    debug = os.environ.get('DEBUG', 'False').lower() == 'true'
+    
+    print(f"Starting Dash server on port {port}...")
+    print(f"Debug mode: {debug}")
+    
     app.run_server(
-        debug=True, 
-        port=8050,
-        dev_tools_hot_reload=True,
-        dev_tools_ui=True
+        debug=debug,
+        host='0.0.0.0',
+        port=port
     )
